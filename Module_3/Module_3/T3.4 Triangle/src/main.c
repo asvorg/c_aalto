@@ -2,7 +2,7 @@
 
 int main()
 {
-    draw_triangle(5);
+    draw_triangle(100);
     
     return 0;
 }

@@ -9,11 +9,13 @@
 
 int main(void)
 {
-    int a;
-    for (a = 0; a < 10; a++) {
+    int a ;
+    for (a = 8;; a--) {
             if (a % 2 == 1)
             continue;
         printf("value of a is now %d\n", a);
+        if (a == 0)
+            break;
     }
 
     return 0;

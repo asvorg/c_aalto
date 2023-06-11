@@ -58,32 +58,32 @@ void simple_math(void)
     char op;
     scanf("%f %c %f", &num1, &op, &num2);
     if (op != '+' && op != '-' && op != '*' && op != '/') {
-        printf("ERR");
+        printf("ERR\n");
         return;
     }
         if (num1 != (float)num1 || num2 != (float)num2) {
-            printf("ERR");
+            printf("ERR\n");
             return;
     }
     switch (op) {
         case '+':
-            printf("%.1f", num1 + num2);
+            printf("%.1f\n", num1 + num2);
             break;
         case '-':
-            printf("%.1f", num1 - num2);
+            printf("%.1f\n", num1 - num2);
             break;
         case '*':
-            printf("%.1f", num1 * num2);
+            printf("%.1f\n", num1 * num2);
             break;
         case '/':
             if (num2 == 0) {
-                printf("ERR");
+                printf("ERR\n");
                 return;
             }
-            printf("%.1f", num1 / num2);
+            printf("%.1f\n", num1 / num2);
             break;
         default:
-            printf("ERR");
+            printf("ERR\n");
             break;
     }
     return;

@@ -28,4 +28,14 @@
 void draw_triangle(unsigned int size)
 {
     
+    unsigned int i, j;
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < size - i - 1; j++) {
+            printf(".");
+        }
+        for (j = size - i - 1; j < size; j++) {
+            printf("#");
+        }
+        printf("\n");
+    }
 }

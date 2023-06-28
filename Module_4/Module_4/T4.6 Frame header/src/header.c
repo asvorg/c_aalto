@@ -28,14 +28,51 @@
 
 
 int validateHeader(uint32_t header)
-{
-    
-    return -1;
+{   
+    uint32_t mask = 42;
+    for (int i = 0; i < 5; i++)
+    {
+        int bit = header & (mask << i);
+        if (bit) {
+            ;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    if (header & (mask << 5) == 1) {
+        if(header & (mask << 6) != 1) {
+            return 0;
+        }
+    }
+    if (header & (mask << 5) == 0) {
+        if(header & (mask << 7) == 0) {
+            return 0;
+        }
+    }
+    int source = getSourceAddress(header);
+    int dest = getDestinationAddress(header);
+    if (source == 0 || dest == 0) {
+        return 0;
+    }
+    if (source == dest) {
+        return 0;
+    }
+    return 1;
 }
+
 int getFrameId(uint32_t header)
 {
+    if (validateHeader(header) == 0) {
+        return -1;
+    }
+    else {
+        uint32_t mask = 31;
+        int frameid = header & (mask << 11);
+        return frameid;
+    }
     
-    return -2;
 }
 int getFrameType(uint32_t header)
 {

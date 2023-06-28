@@ -21,7 +21,11 @@
  *
  */
 uint32_t op_bit_set(uint32_t data, int i) {
-  
+    for (int j = 0; j < 32; j++) {
+        if (j == i) {
+            data = data | (1 << j);
+        }
+    }
   return data;
 }
 
@@ -44,6 +48,11 @@ uint32_t op_bit_set(uint32_t data, int i) {
  */
 
 uint32_t op_bit_clear(uint32_t data, int i) {
+      for (int j = 0; j < 32; j++) {
+        if (j == i) {
+            data = data & ~(1 << j);
+        }
+    }
   
   return data;
 }
@@ -67,6 +76,11 @@ uint32_t op_bit_clear(uint32_t data, int i) {
  */
 
 uint32_t op_bit_toggle(uint32_t data, int i) {
+    for (int j = 0; j < 32; j++) {
+        if (j == i) {
+            data ^= (1 << j);
+        }
+    }
   
   return data;
 }
@@ -90,8 +104,18 @@ uint32_t op_bit_toggle(uint32_t data, int i) {
  */
 
 int op_bit_get(uint32_t data, int i) {
-  
+    for (int j = 0; j < 32; j++) {
+        if (j == i) {
+            if (data >> j & 1) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+    return 0;
 }
+  
 
 /* DESCRIPTION:
  * ------------
@@ -119,5 +143,12 @@ int op_bit_get(uint32_t data, int i) {
  */
 
 void op_print_byte(unsigned char b) {
+    for (int i = 7;i >= 0; i--) {
+        if (b >> i & 1) {
+            printf("1");
+        } else {
+            printf("0");
+        }
+    }
   
 }

@@ -29,7 +29,20 @@
  *
  */
 
-uint8_t op_bit_get_sequence(uint32_t data, uint32_t mask)
-{
+uint8_t op_bit_get_sequence(uint32_t data, uint32_t mask){
+    uint8_t retVal = 0;
+    int j = 0;
+    for (int i = 0; i < 32; i++) {
+        if ((mask & (1 << i)) != 0) {
+            if ((data & (1 << i)) != 0) {
+                retVal = retVal | (1 << j);
+            }
+            else {
+                retVal = retVal | (0 << j);
+            }
+            j++;
+        }
+    }
+    return retVal;
     
 }

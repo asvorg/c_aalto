@@ -5,7 +5,7 @@ int main()
 {
     /* Implement your own tests here. Free feel to modify. */
 
-    char str[] = "one, two, three? four, five";
+    char str[] = "Hello student?candidate";
 
     // Test print
     qstr_print(str);

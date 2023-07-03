@@ -76,19 +76,43 @@ int getFrameId(uint32_t header)
 }
 int getFrameType(uint32_t header)
 {
+    if (validateHeader(header) == 0) {
+        return -1;
+    }
+    else {
+        uint32_t mask = 1;
+        int ack = header & (mask << 5);
+        if (ack == 1) {
+            return 0;
+        }
+        else {
+            uint32_t mask = 3;
+            int type = header & (mask << 7);
+            return type;
+        }
+    }
     
-    return -2;
+}
+int getDestinationAddress(uint32_t header)
+{
+    
+    uint32_t mask = 31;
+    int dest = header & (mask << 21);
+    return dest;
 }
 int getSourceAddress(uint32_t header)
 {
     
-    return -2;
+    uint32_t mask = 31;
+    int source = header & (mask << 16);
+    return source;
 }
 
 uint32_t createAckHeader(int destAddress, int sourceAddress, uint8_t frameId, char valid)
 {
     
     return 0;
+    
 }
 
 uint32_t createHeader(int destAddress, int sourceAddress, uint8_t frameId, uint8_t type)

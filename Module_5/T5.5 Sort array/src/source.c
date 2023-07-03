@@ -12,8 +12,15 @@
  */
 int compare_ascending(const void *p1, const void *p2)
 {
-    
-    return 0;
+    if (*(int*)p1 < *(int*)p2){
+        return -1;
+    }
+    else if (*(int*)p1 > *(int*)p2){
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
 
 /**
@@ -24,5 +31,19 @@ int compare_ascending(const void *p1, const void *p2)
  */
 void sort(int *array, int size)
 {
+    int i, j,min;
+    for (i = 0; i < size - 1; i++){
+        min = i;
+        for (j = i + 1; j < size; j++){
+            if (array[j] < array[min]){
+                min = j;
+            }
+        }
+        if (min != i){
+            int temp = array[i];
+            array[i] = array[min];
+            array[min] = temp;
+        }
+    }
     
 }

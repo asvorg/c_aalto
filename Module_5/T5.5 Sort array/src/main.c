@@ -14,9 +14,12 @@ int main()
 {
     /* Sort. Implement a function to print
      * the resulting array to see that it really works */ 
-    int arr[] = {3, 4, 7, 2, 8};
-    sort(arr, 5);
-    print_array(arr, 5);
+    //fill the array with 100 numbers in random order
+    int arr[1000000];
+    int i;
+    for (i = 0; i < 1000000; i++) arr[i] = (i * 17 + 13) % 1000000;
+    sort(arr, 1000000);
+    print_array(arr, 1000000);
     
     return 0;
 }

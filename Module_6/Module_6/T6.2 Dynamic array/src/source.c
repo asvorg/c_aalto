@@ -1,6 +1,7 @@
 
 #include "source.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 /**
  * \brief Creates a dynamically allocated array and reads the specified number of
  *        integers from the standard input stream.
@@ -10,7 +11,12 @@
  */
 int *create_dyn_array(unsigned int n)
 {
-    
+    int* ptr;
+    ptr = (int*)malloc(n * sizeof(int));
+    for (unsigned i = 0; i < n; i++) {
+        scanf("%d", &ptr[i]);
+    }
+    return ptr;
 }
 
 /**
@@ -23,5 +29,12 @@ int *create_dyn_array(unsigned int n)
  */
 int *add_dyn_array(int *arr, unsigned int num, int newval)
 {
-    
+    int* ptr;
+    ptr = (int*)malloc((num + 1) * sizeof(int));
+    for (unsigned i = 0; i < num; i++) {
+        ptr[i] = arr[i];
+    }
+    ptr[num] = newval;
+    free(arr);
+    return ptr;
 }

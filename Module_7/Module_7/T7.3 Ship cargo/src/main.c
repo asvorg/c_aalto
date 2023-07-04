@@ -39,6 +39,7 @@ void clear_cargo(struct Ship *vessel)
         vessel->cargo[i] = NULL;
     }
 
+}
 /**
  * \brief Adds the specified cargo to the ship vessel.
  *
@@ -47,7 +48,15 @@ void clear_cargo(struct Ship *vessel)
  */
 void add_cargo(struct Ship *vessel, const char *cargo)
 {
+    for (int i = 0; i < 10; i++)
+    {
+        if (vessel->cargo[i] == NULL)
+        {
+            vessel->cargo[i] = cargo;
+            break;
+        }
     }
+}
 
 int main(void)
 {
@@ -81,6 +90,7 @@ int main(void)
         }
         printf("----------\n");
     }
+
 
     return 0;
 }

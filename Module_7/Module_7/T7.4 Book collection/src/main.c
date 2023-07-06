@@ -4,14 +4,6 @@
 #include <stdlib.h>
 #include "book.h"
 
-void delete_collection(struct book *collection, unsigned int size)
-{
-    for (unsigned int i = 0; i < size; i++) {
-        free(collection[i].title);
-        free(collection[i].author);
-    }
-    free(collection);
-}
 
 int main(void)
 {
@@ -25,6 +17,7 @@ int main(void)
         printf("Initialization failed\n");
     }
     
+
     free(a1.title);
     free(a1.author);
     

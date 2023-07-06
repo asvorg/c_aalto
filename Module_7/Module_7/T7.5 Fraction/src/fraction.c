@@ -1,4 +1,5 @@
 #include "fraction.h"
+#include <stdlib.h>
 
 
 // Declare the structure fraction_st here
@@ -56,8 +57,17 @@ unsigned int gcd(unsigned int u, unsigned int v)
  */
 Fraction *setFraction(unsigned int numerator, unsigned int denominator)
 {
-    Fraction *f = NULL;
-    
+    // Allocate memory for the fraction
+    Fraction *f = malloc(sizeof(Fraction));
+    if (f == NULL) {
+        // Memory allocation failed
+        return NULL;
+    }
+
+    // Assign numerator and denominator to the fraction
+    f->numerator = numerator;
+    f->denominator = denominator;
+
     return f;
 }
 
@@ -69,8 +79,8 @@ Fraction *setFraction(unsigned int numerator, unsigned int denominator)
  */
 unsigned int getNum(const Fraction *f)
 {
-    
-    return 0;
+        
+    return f->numerator;
 }
 
 /**
@@ -82,7 +92,7 @@ unsigned int getNum(const Fraction *f)
 unsigned int getDenom(const Fraction *f)
 {
     
-    return 0;
+    return f->denominator;
 }
 
 /**
@@ -92,7 +102,7 @@ unsigned int getDenom(const Fraction *f)
  */
 void freeFraction(Fraction *f)
 {
-    
+    free(f);
 }
 
 

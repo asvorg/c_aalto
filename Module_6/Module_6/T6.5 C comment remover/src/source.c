@@ -22,27 +22,30 @@
 char *delete_comments(char *input)
 {
 
-    char *output = (char*)malloc(sizeof(char));
+    char* output = (char*)malloc(strlen(input) + 1);
     char *output_start = output; 
 
     long unsigned int i = 0;
+    int in_block_comment = 0;
+ 
     for (i = 0; i < strlen(input); i++)
     {
-        if (input[i] == '/' && input[i + 1] == '*') 
+        if (in_block_comment)
         {
-            while (1){
-                if (input[i] != '\n' || input[i] != '\r' || input[i] != '\t' || input[i] != ' ')
-                {
-                    i++;
-                }
-                if (input[i] == '*' && input[i + 1] == '/')
-                {
-                    i += 2;
-                    break;
-                }
+            if (input[i] == '*' && input[i + 1] == '/')
+            {
+                in_block_comment = 0;
+                i++;  
             }
-            i++;
+            continue; 
         }
+        if (input[i] == '/' && input[i + 1] == '*')
+        {
+            in_block_comment = 1;
+            i++;
+            continue;
+        }
+        
         else if (input[i] == '/' && input[i + 1] == '/') 
         {
             while (input[i] != '\n')
@@ -51,19 +54,13 @@ char *delete_comments(char *input)
             }
         }
         else
-        {
+        {   
             *output = input[i];
             output++;
+            
         }
-        
     }
-    /*
-    while (*(output - 1) == ' ')
-    {
-        output--;
-    }
-    */
-    //remove junk
     *output = '\0';
+    free(input);
     return output_start;
 }

@@ -118,7 +118,7 @@ void freeFraction(Fraction *f)
 int compFraction(const Fraction *a, const Fraction *b)
 {
     
-    return 0;
+    
 }
 
 /**

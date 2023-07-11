@@ -1,11 +1,10 @@
-#include "source.h"
-
 #include <stdlib.h>
 #include <string.h>
 
 char *my_strcat(char *dest, const char *src)
 {
-        char *origdest = dest;
+    char *origdest = dest;
+
     while (*dest)
     {
         dest++;
@@ -13,9 +12,9 @@ char *my_strcat(char *dest, const char *src)
 
     while (*src)
     {
-        *dest++ = *src++; // Copy the source
-    }
-    *dest = 0;
+        *dest++ = *src++;     }
+    
+    *dest = '\0';
 
     return origdest;
 }

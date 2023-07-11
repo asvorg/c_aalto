@@ -1,6 +1,6 @@
-
 #include "source.h"
-
+#include <stdlib.h>
+#include <string.h>
 /**
  * \brief Removes the C comments from the input C code.
  *
@@ -21,5 +21,49 @@
 
 char *delete_comments(char *input)
 {
-    
+
+    char *output = (char*)malloc(sizeof(char));
+    char *output_start = output; 
+
+    long unsigned int i = 0;
+    for (i = 0; i < strlen(input); i++)
+    {
+        if (input[i] == '/' && input[i + 1] == '*') 
+        {
+            while (1){
+                if (input[i] != '\n' || input[i] != '\r' || input[i] != '\t' || input[i] != ' ')
+                {
+                    i++;
+                }
+                if (input[i] == '*' && input[i + 1] == '/')
+                {
+                    i += 2;
+                    break;
+                }
+            }
+            i++;
+        }
+        else if (input[i] == '/' && input[i + 1] == '/') 
+        {
+            while (input[i] != '\n')
+            {
+                i++;
+            }
+        }
+        else
+        {
+            *output = input[i];
+            output++;
+        }
+        
+    }
+    /*
+    while (*(output - 1) == ' ')
+    {
+        output--;
+    }
+    */
+    //remove junk
+    *output = '\0';
+    return output_start;
 }

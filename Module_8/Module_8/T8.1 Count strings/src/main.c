@@ -5,7 +5,7 @@
 int main()
 {
     /* Count substr */
-    char str2[] = "one two one twotwo three";
+    char str2[] = "one two one twotwo three two tow";
     printf("num_substr: %d\n", num_substr(str2, "two"));
         
     return 0;

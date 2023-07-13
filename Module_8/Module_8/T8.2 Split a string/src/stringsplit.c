@@ -1,7 +1,8 @@
 #include "stringsplit.h"
 
 #include <stdio.h>
-
+#include <string.h>
+#include <stdlib.h>
 
 /**
  * \brief Splits a string into its parts, and returns a dynamically allocated  
@@ -19,17 +20,40 @@
  *         strings excluding the split.      
  */
 char** split_string(const char* str, const char* split) {
-	
-	return NULL;
-}
 
+	char** res = NULL;
+	int count = 0;
+	char* copy = malloc(sizeof(char) * (strlen(str) + 1));
+	strcpy(copy, str);
+	const char* limiter = split;
+	char* tok = strtok(copy, limiter);
+	while (tok != NULL) {
+		*tok = '\0';
+
+		count++;
+		res = realloc(res, sizeof(char*) * count);
+		res[count - 1] = malloc((strlen(tok) + 1) * sizeof(char));
+		strcpy(res[count - 1], tok);
+		copy = copy + strlen(tok) + strlen(limiter);
+		tok = strtok(NULL, limiter);
+	}
+	count++;
+	res = realloc(res, sizeof(char*) * count);
+	res[count - 1] = NULL;
+	free(copy);
+	return res;
+
+
+}
 /**
  * \brief Prints string parts that are split with split_string function.
  * 
  * \param split_string An array of strings returned by split_string function.
  */
 void print_split_string(char** split_string) {
-	
+	for (int i = 0; split_string[i] != NULL; i++) {
+		printf("%s\n", split_string[i]);
+	}
 }
 
 /**
@@ -38,5 +62,9 @@ void print_split_string(char** split_string) {
  * \param split_string An array of strings returned by split_string function.
  */
 void free_split_string(char** split_string) {
+	for (int i = 0; split_string[i] != NULL; i++) {
+		free(split_string[i]);
+	}
+	free(split_string);
 	
 }

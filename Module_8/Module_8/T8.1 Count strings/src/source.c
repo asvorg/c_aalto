@@ -1,4 +1,5 @@
 #include "source.h"
+#include <string.h>
 
 
 /**
@@ -14,11 +15,10 @@ int num_substr(const char* str, const char* sub) {
 	
     int count = 0;
     int len = strlen(sub);
-    
-    for (int i = 0; i < strlen(str); i++) {
-        if (strncmp(str + i, sub, len) == 0) {
-            count++;
-        }
+    while ((str = strstr(str, sub))) {
+        count++;
+        str += len;
     }
     return count;
+    
 }

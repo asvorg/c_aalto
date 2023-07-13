@@ -19,7 +19,9 @@
 int compareAlpha(const void* a, const void* b) {
 	(void)a;
 	(void)b;
-		return 0;
+	char *name_a = ((Product*)a)->name;
+	char *name_b = ((Product*)b)->name;
+	return strcmp(name_a, name_b);
 }
 
 /**
@@ -39,7 +41,15 @@ int compareAlpha(const void* a, const void* b) {
 int compareNum(const void* a, const void* b) {
 	(void)a;
 	(void)b;
-		return 0;
+	int in_stock_a = ((Product*)a)->in_stock;
+	int in_stock_b = ((Product*)b)->in_stock;
+	if (in_stock_a > in_stock_b) {
+		return -1;
+	} else if (in_stock_a < in_stock_b) {
+		return 1;
+	} else {
+		return compareAlpha(a, b);
+	}
 }
 
 const Product* findProduct(const Product* p_array,
@@ -48,5 +58,12 @@ const Product* findProduct(const Product* p_array,
 	(void)p_array;
 	(void)search_key;
 	(void)cmp;
-		return NULL;
+	int i = 0;
+	while (p_array[i].name[0] != 0) {
+		if (strcmp(p_array[i].name, search_key) == 0) {
+			return &p_array[i];
+		}
+		i++;
+	}
+	return NULL;
 }

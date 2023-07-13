@@ -29,9 +29,12 @@ void copy_to_array(char **dest, char **src, int num)
  * \note The strings must have a termination character.
  */
 char **allocate_memory(int *xdim, int ydim)
-{
-	char **arr;
-		return arr;
+{	
+    char **array = (char **)malloc(ydim * sizeof(char *));
+    for (int i = 0; i < ydim; i++) {
+        array[i] = (char *)malloc(xdim[i] * sizeof(char));
+    }
+	return array;
 }
 
 /**
@@ -42,7 +45,11 @@ char **allocate_memory(int *xdim, int ydim)
  */
 void free_array(char **w, int ydim)
 {
+	for (int i = 0; i < ydim; i++)
+	{
+		free(w[i]);
 	}
+}
 
 int main(void)
 {

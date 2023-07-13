@@ -2,19 +2,40 @@
 #include <string.h>
 
 char *my_strcat(char *dest, const char *src)
-{
-    char *origdest = dest;
+{   
+    
+    int dest_len = strlen(dest);
+    int src_len = strlen(src);
+    int y = 0;
+    char *res;
 
-    while (*dest)
+    if (dest_len == 0)
     {
-        dest++;
+        res = malloc(src_len);
     }
 
-    while (*src)
+    if (src_len == 0)
     {
-        *dest++ = *src++;     }
-    
-    *dest = '\0';
+        res = malloc(dest_len);
+    }
 
-    return origdest;
+    if (dest_len != 0 && src_len != 0)
+    {   
+        res = malloc(dest_len + src_len);
+    }
+
+    for (int i = 0; i < dest_len; i++)
+    {
+        res[i] = dest[i];
+        y++;
+    }
+
+    for (int i = 0; i < src_len; i++)
+    {   
+        res[dest_len + i] = src[i];
+        y++;
+    }
+    res[dest_len + y] = '\0';
+    return res;
+    
 }

@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    if (file_to_hex("main.c") == -1) {
+    if (file_to_hex("hexread.c") == -1) {
          fprintf(stderr, "Could not open main.c\n");
     }
 }

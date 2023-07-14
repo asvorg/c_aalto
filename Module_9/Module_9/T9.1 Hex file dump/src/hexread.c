@@ -1,4 +1,5 @@
 #include "hexread.h"
+#include <stdio.h>
 
 
 /**
@@ -25,5 +26,32 @@
  *         reading the file.
  */
 int file_to_hex(const char* filename) {
-	
+
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+    fprintf(stderr, "Could not open file %s\n", filename);
+    return -1;
+    }
+
+    int size;
+
+    fseek(file, 0, SEEK_END);
+    size = ftell(file);
+    rewind(file); 
+
+    int count = 0;
+
+    for (int i = 0; i < size; i++) {
+        int c = fgetc(file);
+        if (c == EOF) {
+            break;
+        }
+        printf("%02x ", c);
+        count++;
+        if ((i + 1) % 16 == 0) {
+            printf("\n");
+        }
+    }
+    fclose(file);
+    return count;
 }

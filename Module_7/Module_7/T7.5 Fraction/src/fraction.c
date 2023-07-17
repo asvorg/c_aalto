@@ -1,8 +1,13 @@
 #include "fraction.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 
 // Declare the structure fraction_st here
+struct fraction_st {
+    unsigned int numerator;
+    unsigned int denominator;
+};
 
 
 /**
@@ -78,8 +83,7 @@ Fraction *setFraction(unsigned int numerator, unsigned int denominator)
  * \return the numerator of f
  */
 unsigned int getNum(const Fraction *f)
-{
-        
+{   
     return f->numerator;
 }
 
@@ -117,7 +121,13 @@ void freeFraction(Fraction *f)
  */
 int compFraction(const Fraction *a, const Fraction *b)
 {
-    
+    if (a->numerator * b->denominator < b->numerator * a->denominator) {
+        return -1;
+    } else if (a->numerator * b->denominator > b->numerator * a->denominator) {
+        return 1;
+    } else {
+        return 0;
+    }
     
 }
 
@@ -130,9 +140,24 @@ int compFraction(const Fraction *a, const Fraction *b)
  */
 Fraction *addFraction(const Fraction *a, const Fraction *b)
 {
-    Fraction *res = NULL;
+    Fraction *res = malloc(sizeof(Fraction));
+    if (res == NULL) {
+        return NULL;
+    }
+    if (a -> denominator == b -> denominator) {
+        res -> numerator = a -> numerator + b -> numerator;
+        res -> denominator = a -> denominator;
+        return res;
+    } else {
+        int lcd = a->denominator * b->denominator / gcd(a->denominator, b->denominator);
+        int a_mult = lcd / a->denominator;
+        int b_mult = lcd / b->denominator;
+        res->numerator = a->numerator * a_mult + b->numerator * b_mult;
+        res->denominator = lcd;
+        return res;
+    }
+  
     
-    return res;
 }
 
 /**
@@ -143,7 +168,9 @@ Fraction *addFraction(const Fraction *a, const Fraction *b)
  */
 void reduceFraction(Fraction *val)
 {
-    
+    unsigned int gcd_val = gcd(val->numerator, val->denominator);
+    val->numerator /= gcd_val;
+    val->denominator /= gcd_val;
 }
 
 /**
@@ -155,5 +182,5 @@ void reduceFraction(Fraction *val)
  */
 void printFraction(const Fraction *val)
 {
-    
+    printf("%d/%d", val->numerator, val->denominator);   
 }

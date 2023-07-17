@@ -1,6 +1,7 @@
 
 #include "filestats.h"
-
+#include <ctype.h>
+#include <stdio.h>
 /**
  * \brief Returns the number of lines in a file. 
  * 
@@ -8,7 +9,18 @@
  * \return The number of lines in the file, or -1 if an error occurs. 
  */
 int line_count(const char* filename) {
-	
+    int cnt = 0;
+	FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        fprintf(stderr, "Could not open file %s\n", filename);
+        return -1;
+    }
+    char line[256];
+
+    while (fgets(line, sizeof(line), file)) {
+        cnt++;
+    }
+    return cnt;
 }
 
 /**
@@ -24,5 +36,21 @@ int line_count(const char* filename) {
  * \return The number of words in the file, or -1 if an error occurs.
  */
 int word_count(const char* filename) {
-	
+    int cnt = 0;
+
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        fprintf(stderr, "Could not open file %s\n", filename);
+        return -1;
+    }
+    for (int i = 0; i < 1000; i++) {
+        int c = fgetc(file);
+        if (c == EOF) {
+            break;
+        }
+        if (isspace(c)) {
+            cnt++;
+        }
+    }
+    return cnt;
 }

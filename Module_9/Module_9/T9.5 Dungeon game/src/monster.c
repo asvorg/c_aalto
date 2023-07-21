@@ -98,10 +98,32 @@ void attackPunch(Game* game, Creature* monst) {
  * \param game The game state
  * \param monst The monster to be moved toward the player
  */
-void moveTowards(const Game* game, Creature* monst) {
-	(void) game; 
-	(void) monst; 
-	// TODO: implement this function 
+void moveTowards(const Game* game, Creature* monst) { 
+
+	int x = monst->pos.x;
+	int y = monst->pos.y;
+	int px = game->position.x;
+	int py = game->position.y;
+	int dx = px - x;
+	int dy = py - y;
+	int adx = abs(dx);
+	int ady = abs(dy);
+	int sx = 0;
+	int sy = 0;
+	if(adx > 0){
+		sx = dx / adx;
+	}
+	if(ady > 0){
+		sy = dy / ady;
+	}
+	if(!isBlocked(game, x + sx, y + sy)) {
+		monst->pos.x = x + sx;
+		monst->pos.y = y + sy;
+	} else if(!isBlocked(game, x + sx, y)) {
+		monst->pos.x = x + sx;
+	} else if(!isBlocked(game, x, y + sy)) {
+		monst->pos.y = y + sy;
+	}
 	
 }
 
@@ -140,9 +162,31 @@ void moveTowards(const Game* game, Creature* monst) {
  * \param monst The monster to be moved away the player
  */
 void moveAway(const Game* game, Creature* monst) {
-	(void) game; 
-	(void) monst; 
-
+	
+	int x = monst->pos.x;
+	int y = monst->pos.y;
+	int px = game->position.x;
+	int py = game->position.y;
+	int dx = px - x;
+	int dy = py - y;
+	int adx = abs(dx);
+	int ady = abs(dy);
+	int sx = 0;
+	int sy = 0;
+	if(adx > 0){
+		sx = dx / adx;
+	}
+	if(ady > 0){
+		sy = dy / ady;
+	}
+	if(!isBlocked(game, x - sx, y - sy)) {
+		monst->pos.x = x - sx;
+		monst->pos.y = y - sy;
+	} else if(!isBlocked(game, x - sx, y)) {
+		monst->pos.x = x - sx;
+	} else if(!isBlocked(game, x, y - sy)) {
+		monst->pos.y = y - sy;
+	}
 
 	
 }
@@ -178,8 +222,20 @@ void moveAway(const Game* game, Creature* monst) {
  * \param game The game
  */
 void monsterAction(Game* game) {
-	(void) game; 
-	// TODO: implement this function 
+	for(unsigned int i = 0; i < game->numMonsters; i++) {
+		Creature* m = &game->monsters[i];
+		if(m->hp > 0) {
+			if(abs(m->pos.x - game->position.x) <= 1 && abs(m->pos.y - game->position.y) <= 1) {
+				if(m->attack != NULL) {
+					m->attack(game, m);
+				}
+			} else {
+				if(m->move != NULL) {
+					m->move(game, m);
+				}
+			}
+		}
+	}
 	
 }
 
@@ -224,7 +280,7 @@ void monsterAction(Game* game) {
 void createMonsters(Game* game) {
 	const Options* opts = &game->opts;
 	
-	game->monsters = malloc(sizeof(Creature) * opts->numMonsters);
+	game->monsters = malloc(sizeof(Creature) * opts->numMonsters + 1);
 	game->numMonsters = opts->numMonsters;
 	
 	for(unsigned int i = 0; i < opts->numMonsters; i++) {

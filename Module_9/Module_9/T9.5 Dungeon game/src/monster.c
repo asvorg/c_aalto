@@ -142,7 +142,8 @@ void moveTowards(const Game* game, Creature* monst) {
 void moveAway(const Game* game, Creature* monst) {
 	(void) game; 
 	(void) monst; 
-	// TODO: implement this function 
+
+
 	
 }
 
@@ -221,7 +222,45 @@ void monsterAction(Game* game) {
  * \param game The game
  */
 void createMonsters(Game* game) {
-	(void) game; 
+	const Options* opts = &game->opts;
+	
+	game->monsters = malloc(sizeof(Creature) * opts->numMonsters);
+	game->numMonsters = opts->numMonsters;
+	
+	for(unsigned int i = 0; i < opts->numMonsters; i++) {
+		Creature* m = &game->monsters[i];
+		m->pos.x = -1;
+		m->pos.y = -1;
+		m->hp = 0;
+		m->maxhp = 0;
+		m->name[0] = '\0';
+		m->sign = '\0';
+		m->attack = NULL;
+		m->move = NULL;
+	}
+	
+	for(unsigned int i = 0; i < opts->numMonsters; i++) {
+		Creature* m = &game->monsters[i];
+		int x, y;
+		do {
+			x = rand() % opts->mapWidth;
+			y = rand() % opts->mapHeight;
+		} while(isBlocked(game, x, y));
+		m->pos.x = x;
+		m->pos.y = y;
+		int type = rand() % (sizeof(types) / sizeof(MonstType));
+		strcpy(m->name, types[type].name);
+		m->sign = types[type].sign;
+		m->hp = rand() % (types[type].hphigh - types[type].hplow) + types[type].hplow;
+		m->maxhp = m->hp;
+		if(rand() % 2) {
+			m->attack = attackPunch;
+		} else {
+			m->attack = NULL;
+		}
+		m->move = NULL;
+	}
+
 	
 }
 

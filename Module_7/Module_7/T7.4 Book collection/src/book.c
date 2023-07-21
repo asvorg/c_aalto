@@ -86,6 +86,7 @@ struct book *add_to_collection(struct book *collection,
 							   unsigned int size,
 							   struct book new_book)
 {
+	//dynamic memory allocation
 	struct book *new_collection = malloc(sizeof(struct book) * (size + 1));
 	
 	if (new_collection == NULL) {

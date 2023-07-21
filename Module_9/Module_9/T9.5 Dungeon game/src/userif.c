@@ -202,11 +202,14 @@ void printMe(const Game* game) {
  *          given position (x,y). 0 if moving is allowed.
  */
 int isBlocked(const Game* game, int x, int y) {
-	(void) game; 
-	(void) x; 
-	(void) y; 
-	
-	return 0; 
+	const Map* map = &game->map;
+	if(map->tile[y][x] == TILE_WALL)
+		return 1;
+	for(unsigned int i = 0; i < game->numMonsters; i++) {
+		if(game->monsters[i].pos.x == x && game->monsters[i].pos.y == y)
+			return 1;
+	}
+	return 0;	
 }
 
 /**

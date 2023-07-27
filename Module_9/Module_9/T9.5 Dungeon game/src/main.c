@@ -23,8 +23,8 @@ void setOptions(Game* game, int argc, char** argv) {
 	opt->mapWidth = 70;
 	opt->mapHeight = 40;
 	opt->numMonsters = 10;
-	opt->visibility = 5;
-	opt->showAll = 0;
+	opt->visibility = 15;
+	opt->showAll = 1;
 }
 
 int main(int argc, char** argv) {

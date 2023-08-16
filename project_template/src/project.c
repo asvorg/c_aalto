@@ -8,6 +8,9 @@ struct Command {
     char command;
     char arg1[1000];
     char arg2[1000];
+    char arg3[1000];
+    char arg4[1000];
+    
 };
 
 struct Data {
@@ -19,30 +22,29 @@ struct Data {
 
 #define MAX_DATA 1000
 
+
 struct Command get_command() {
     char command[1];
     char arg1[1000];
     char arg2[1000];
+    char arg3[1000];
+    char arg4[1000];
+
     struct Command cmd;
     printf("Enter command: ");
-    // If command is M then the argument 2 is 3 integers separated by spaces
-    if (scanf("%s", command) == "M") {
-        //split the string into 3 integers
-        char *token = strtok(command, " ");
-        int i = 0;
-        while (token != NULL) {
-            if (i == 0) {
-                strcpy(arg1, token);
-            } else if (i == 1) {
-                strcpy(arg2, token);
-            } else {
-                break;
-            }
-            token = strtok(NULL, " ");
-            i++;
-        }
+    scanf(" %c", command);
+    
+    if (command[0] == 'M') {
+        scanf("%s %s %s", arg2, arg3, arg4);
+        int num_medals[3];
+        sscanf(arg2, "%d", &num_medals[0]);
+        sscanf(arg3, "%d", &num_medals[1]);
+        sscanf(arg4, "%d", &num_medals[2]);
+        cmd.command = 'M';
+        sprintf(cmd.arg2, "%d %d %d", num_medals[0], num_medals[1], num_medals[2]);
         return cmd;
     }
+    
     // Consume the rest of the line using fgets
     fgets(arg1, sizeof(arg1), stdin);
     sscanf(arg1, "%s %s", arg1, arg2);
@@ -53,6 +55,7 @@ struct Command get_command() {
     
     return cmd;
 }
+
 
 void initialize_database(struct Data database[], int *num_data) {
     *num_data = 0; 

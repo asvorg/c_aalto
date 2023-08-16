@@ -30,12 +30,23 @@ struct Command get_command() {
     char arg3[1000];
     char arg4[1000];
 
+    //flush the args
+    strcpy(arg1, "");
+    strcpy(arg2, "");
+    strcpy(arg3, "");
+    strcpy(arg4, "");
+
+
     struct Command cmd;
     printf("Enter command: ");
     scanf(" %c", command);
-    
+
     if (command[0] == 'M') {
-        scanf("%s %s %s", arg2, arg3, arg4);
+
+        fgets(arg1, sizeof(arg1), stdin);
+        sscanf(arg1, "%s %s %s %s", arg1, arg2, arg3, arg4);
+        //print the args line by line
+
         int num_medals[3];
         sscanf(arg2, "%d", &num_medals[0]);
         sscanf(arg3, "%d", &num_medals[1]);
@@ -44,6 +55,7 @@ struct Command get_command() {
         sprintf(cmd.arg2, "%d %d %d", num_medals[0], num_medals[1], num_medals[2]);
         return cmd;
     }
+
     
     // Consume the rest of the line using fgets
     fgets(arg1, sizeof(arg1), stdin);
@@ -52,7 +64,8 @@ struct Command get_command() {
     cmd.command = command[0];
     strcpy(cmd.arg1, arg1);
     strcpy(cmd.arg2, arg2);
-    
+    // flush the input buffer
+    fflush(stdin);
     return cmd;
 }
 
@@ -94,6 +107,18 @@ void add_medals(struct Data database[], int num_data, char *name, int num_gold, 
             database[i].num_gold += num_gold;
             database[i].num_silver += num_silver;
             database[i].num_bronze += num_bronze;
+
+            //if the medals are negative, set them to 0
+            if (database[i].num_gold < 0) {
+                database[i].num_gold = 0;
+            }
+            if (database[i].num_silver < 0) {
+                database[i].num_silver = 0;
+            }
+            if (database[i].num_bronze < 0) {
+                database[i].num_bronze = 0;
+            }
+            
 
             
             printf("Medals added to %s:\n", name);

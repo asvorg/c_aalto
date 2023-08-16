@@ -25,8 +25,24 @@ struct Command get_command() {
     char arg2[1000];
     struct Command cmd;
     printf("Enter command: ");
-    scanf(" %c", command); 
-    
+    // If command is M then the argument 2 is 3 integers separated by spaces
+    if (scanf("%s", command) == "M") {
+        //split the string into 3 integers
+        char *token = strtok(command, " ");
+        int i = 0;
+        while (token != NULL) {
+            if (i == 0) {
+                strcpy(arg1, token);
+            } else if (i == 1) {
+                strcpy(arg2, token);
+            } else {
+                break;
+            }
+            token = strtok(NULL, " ");
+            i++;
+        }
+        return cmd;
+    }
     // Consume the rest of the line using fgets
     fgets(arg1, sizeof(arg1), stdin);
     sscanf(arg1, "%s %s", arg1, arg2);
@@ -140,12 +156,10 @@ int main(void) {
             add_country(database, &num_data, cmd.arg1);
         }
         if (cmd.command == 'M') {
-            // split the second argument into array of integers
             int num_medals[3];
             sscanf(cmd.arg2, "%d %d %d", &num_medals[0], &num_medals[1], &num_medals[2]);
             add_medals(database, num_data, cmd.arg1, num_medals[0], num_medals[1], num_medals[2]);
         }
-
         if (cmd.command == 'L') {
             print_database(database, num_data);
         }

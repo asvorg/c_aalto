@@ -17,7 +17,6 @@ Finland 2 4 6
 Enter command: Q
 
 */
-
 #include "project.h"
 #include <stdio.h>
 #include <string.h>
@@ -131,9 +130,6 @@ void add_medals(struct Data database[], int num_data, char *name, int num_gold, 
             if (database[i].num_bronze < 0) {
                 database[i].num_bronze = 0;
             }
-
-
-            
             //printf("Medals added to %s:\n", name);
             //printf("Gold: %d\n", database[i].num_gold);
             //printf("Silver: %d\n", database[i].num_silver);
@@ -184,10 +180,8 @@ void load_from_file(struct Data database[], int *num_data, char *filename) {
         printf("Error opening file!\n");
         return;
     }
-    
     *num_data = 0;
     while (fscanf(fp, "%s %d %d %d", database[*num_data].name, &database[*num_data].num_gold, &database[*num_data].num_silver, &database[*num_data].num_bronze) != EOF) {
-        //replace the current database with the one in the file
         (*num_data)++;
     }
     
